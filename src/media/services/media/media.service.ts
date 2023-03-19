@@ -18,6 +18,7 @@ export class MediaService {
     return this.mediaRepository.findBy({ id });
   }
 
+  // Build custom SQL query to search media table by name and description
   searchMediaByNameAndDescription(query: string) {
     return this.mediaRepository
       .createQueryBuilder('media')
@@ -27,6 +28,7 @@ export class MediaService {
       .getMany();
   }
 
+  // pagination using skip and take
   async fetchMediaPaginatedList(
     page: number,
     perPage: number,
@@ -37,9 +39,9 @@ export class MediaService {
     });
     const totalPages = Math.ceil(count / perPage);
     return mediaItems;
-    // return this.mediaRepository.find({ skip, take });
   }
 
+  // updated createdAt and updatedAt fields on creation of media object
   createMedia(mediaDetails: createMediaParams) {
     const newMedia = this.mediaRepository.create({
       ...mediaDetails,

@@ -11,7 +11,13 @@ import {
 import { CreateMediaDto } from 'src/dtos/CreateMedia.dto';
 import { UpdateMediaDto } from 'src/dtos/UpdateMedia.dto';
 import { MediaService } from 'src/media/services/media/media.service';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBadRequestResponse,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 
 @Controller('media')
 export class MediaController {
@@ -39,8 +45,10 @@ export class MediaController {
   //   }
   // }
 
-  @ApiTags()
+  @ApiTags('Media')
   @ApiOperation({ summary: 'Search media by name and description' })
+  @ApiOkResponse({ description: 'Search query executed successfully' })
+  @ApiBadRequestResponse({ description: 'Error executing search query' })
   @Get('search')
   async searchByNameAndDescription(@Query('query') query: string) {
     try {
@@ -61,8 +69,10 @@ export class MediaController {
     }
   }
 
-  @ApiTags()
+  @ApiTags('Media')
   @ApiOperation({ summary: 'Fetch paginated list of media' })
+  @ApiOkResponse({ description: 'Paginated list fetched successfully' })
+  @ApiBadRequestResponse({ description: 'Error fetching paginated list' })
   @Get()
   async fetchPaginatedList(
     @Query('page') page: number,
@@ -87,8 +97,10 @@ export class MediaController {
     }
   }
 
-  @ApiTags()
+  @ApiTags('Media')
   @ApiOperation({ summary: 'Fetch single media' })
+  @ApiOkResponse({ description: 'Media fetched successfully' })
+  @ApiBadRequestResponse({ description: 'Error fetching media' })
   @Get(':id')
   async getSingleMedia(@Param('id') id: string) {
     try {
@@ -107,8 +119,10 @@ export class MediaController {
     }
   }
 
-  @ApiTags()
+  @ApiTags('Media')
   @ApiOperation({ summary: 'Create media object' })
+  @ApiCreatedResponse({ description: 'Media created successfully' })
+  @ApiBadRequestResponse({ description: 'Error creating media' })
   @Post()
   async createMedia(@Body() createMediaDto: CreateMediaDto) {
     try {
@@ -127,8 +141,10 @@ export class MediaController {
     }
   }
 
-  @ApiTags()
+  @ApiTags('Media')
   @ApiOperation({ summary: 'Update media object' })
+  @ApiOkResponse({ description: 'Media updated successfully' })
+  @ApiBadRequestResponse({ description: 'Error updating media' })
   @Patch(':id')
   async updateMediaStatus(
     @Param('id') id: string,
@@ -151,8 +167,10 @@ export class MediaController {
     }
   }
 
-  @ApiTags()
+  @ApiTags('Media')
   @ApiOperation({ summary: 'Delete media object' })
+  @ApiOkResponse({ description: 'Media deleted successfully' })
+  @ApiBadRequestResponse({ description: 'Error deleting media' })
   @Delete(':id')
   async deleteMediaById(@Param('id') id: string) {
     try {
